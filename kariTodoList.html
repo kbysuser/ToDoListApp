@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTFh-8">
+    <meta ttp-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<boby>   
+    <h4>
+        TODOリスト
+    </h4>
+    <form id="from1">
+        <textarea id="tsk_value" cols="30" rows="10"></textarea>
+        <button id="tsk_submit">タスクを追加</button>
+        <h5 id="note">ctrl+Enterでも追加できます</h5>
+    </form>
+    <hr size="3px" width="100%" color="darkblue">
+    <div id="table">
+        <h3 class="list_title"></h3>
+        <ul id="tsk_list"> </ul>
+    </div>
+</boby>
+
+<script>
+    //テキストエリアの値取得のためのDOM
+    let tskVal = document.getElementById("tsk_value")
+    // タスク追加のボタンの処理記述のためのDOM
+    let tskSbm = document.getElementById("tsk_submit")
+    // タスクのリストを記述するためのDOM
+    let tskList = document.getElementById("tsk_list")
+    // 追加ボタンにイベントリスナを追加
+    tskSbm.addEventListener("click", function (evt) {
+        evt.preventDefault()
+        let tsk = tskVal.value
+        addTsk(tsk)
+        tskVal.value = ""
+    })
+    // 　
+    function addTsk(tsk) {
+        //新たな項目をリストに追加
+        let itm = document.createElement("li")
+        console.log("itm.tagName=" + itm.tagName)
+        // リストの子要素の先頭に追加???
+        let listItem = tskList.insertBefore(itm, tskList.children[0])
+        listItem.setAttribute("class","list_item")
+        tsk = tsk.replace(/\n?\r/g, '<br>')
+        console.log("tsk=" + tsk)
+        listItem.innerHTML = "&#x1f600;" + tsk
+        // 削除ボタンの生成
+        let delBtn = document.createElement("button")
+        delBtn.innerText = "削除"
+        // delBtn.setAttribute("class","delete_button")
+        delBtn.setAttribute("class", "delete_button")
+        console.log("delBtn.tagName=" + delBtn.className)
+        listItem.appendChild(delBtn)
+        listItem.insertAdjacentHTML("beforeend",'<hr>')
+        console.log("delBtn.innerText" + delBtn.innerText)
+        // 削除ボタンにイベントリスナを追加
+        delBtn.addEventListener("click", function (evt) {
+            evt.preventDefault()
+            delTsk(delBtn)
+        })
+    }//end of addTsk
+
+    function delTsk(delBtn) {
+        // 削除ボタンが押されたノードの取得
+        let chosenTsk = delBtn.parentElement
+        console.log()
+        let arr = document.getElementsByClassName("delete_button")
+        if (arr[0] != null) {
+            for (let i = 0; i < arr.length; i++) {
+                console.log("arr[i]=" + arr[i])
+            }
+        }
+        //ノードの削除  
+        tskList.removeChild(chosenTsk)
+    }//end of delTsk
+    //crtl+Enterで要素を追加できるようにする
+    document.addEventListener("keydown", function (evt) {
+        ctrlFunc(evt)
+    })
+    //追加ボタンにイベントリスナを追加するときと同様
+    function ctrlFunc(evt) {
+        if (evt.ctrlKey & evt.keyCode == 13) {
+            console.log("evt.ctrlKey=" + evt.ctrlKey)
+            evt.preventDefault()
+            let tsk = tskVal.value
+            addTsk(tsk)
+            tskVal.value = ""
+        }
+    }
+</script>
+
+<style>
+    #note{margin:2em; color:darkblue}
+    h3,h4{
+        color:green;
+    }
+    form{
+        margin: 10px 50% 5px 1em;
+    }
+    .delete_button{
+        background-color: cyan;
+        padding:1px 3px 1px 3px;
+        border: groove 5px rgb(39, 39, 138);
+        border-radius: 10px;
+        margin-left:10px;
+    }
+</style>
+</html>
