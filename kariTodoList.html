@@ -8,18 +8,31 @@
     <title>Document</title>
 </head>
 <boby>
-    <h4>
-        TODOリスト
-    </h4>
-    <form id="from1">
-        <textarea id="tsk_value" cols="30" rows="10"></textarea>
-        <button id="tsk_submit">タスクを追加</button>
-        <h5 id="note">ctrl+Enterでも追加できます</h5>
-    </form>
-    <hr size="3px" width="100%" color="darkblue">
-    <div id="table">
-        <h3 class="list_title"></h3>
-        <ul id="tsk_list"> </ul>
+    <div class="wrapper">
+        <header>
+        <h4>
+            TODOリスト
+        </h4>
+            <form id="from1">
+                <textarea id="tsk_value" cols="30" rows="10"></textarea>
+                <button id="tsk_submit">タスクを追加</button>
+                <!-- <h5 id="note">ctrl+Enterでも追加できます</h5> -->
+            </form>
+        </header>
+        <!-- <hr size="3px" width="100%" color="darkblue"> -->
+        <main>
+            <div id="table">
+                <h3 class="list_title">リスト</h3>
+                <ul id="tsk_list"> </ul>
+            </div>
+        </main>
+        <footer>
+            <font size="2">
+                Ctrl+Enterでもタスクを追加できます<br>
+                クリックでタスクの内容をコピーできます<br>
+                右クリックでタスクを削除できます<br>
+            </font>
+        </footer>
     </div>
 </boby>
 
@@ -156,6 +169,50 @@
         border: groove 5px rgb(39, 39, 138);
         border-radius: 10px;
         margin-left: 10px;
+    }
+    .delete_button:hover{
+        scale:1.5;
+        background-color: pink;
+        transition: all 0.8s ease-in;
+    }
+    .tsk_content:hover{
+        background-color: pink;
+        transition: all 0.8s ease-out;
+    }
+    header,main,footer{
+        width:clamp(200px,50vw,500px);
+        flex-basis: auto;
+        display:block;
+    }
+    header{
+        border: groove 3px cyan;
+        flex: 1;
+    }
+    main{
+        border: groove 3px blue;
+        flex: 0 3 auto;
+        /*  */
+        margin: 10px 0;
+    }
+    footer{
+        border: groove 3px green;
+        /* フッタを下にしようとするとリスト
+        が増えたときにかぶる */
+        /* position: absolute;
+        bottom: 0; */
+        flex: 1 0 auto;
+        /* display:box-sizing; */
+
+    }
+    div.wrapper{
+        display:flex;
+        flex-direction:column;
+        align-items: flex-start;
+        align-content: center;
+        justify-content: space-around;
+        /* width:clamp(200px,50vw,500px); */
+
+
     }
 </style>
 
