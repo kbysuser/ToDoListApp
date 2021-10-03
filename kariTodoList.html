@@ -37,7 +37,7 @@
         addTsk(tsk)
         tskVal.value = ""
     })
-    // 　
+    // 
     function addTsk(tsk) {
         //新たな項目をリストに追加
         let itm = document.createElement("li")
@@ -53,7 +53,7 @@
         // tskContentにタスク内容をいれる
         let tskContent = document.createElement("span")
         tskContent.setAttribute("class", "tsk_content")
-        //innerHTML　と　innerHTMLでどうちがうか
+        //innerHTMLとinnerHTMLでどうちがうか
         tskContent.innerText = tsk
         console.log(tskContent.innerText)
         listItem.appendChild(tskContent)
@@ -99,7 +99,7 @@
         let arr = document.getElementsByClassName("delete_button")
         if (arr[0] != null) {
             for (let i = 0; i < arr.length; i++) {
-                console.log("arr[i]=" + arr[i])
+                console.log("arr[" + i + "]=" + arr[i])
             }
         }
         //ノードの削除  
@@ -120,17 +120,17 @@
         }
     }
     //the function to copy the string in the element with a click  
-    function elmStrCopy(elm){
-        let tmpElm=document.createElement('textarea')
-        tmpElm.setAttribute('type',"hidden")
+    function elmStrCopy(elm) {
+        let tmpElm = document.createElement('textarea')
+        tmpElm.setAttribute('type', "hidden")
         // how is textContent different from innerText ? 
-        tmpElm.textContent=elm.textContent
+        tmpElm.innerText = elm.innerText
         elm.appendChild(tmpElm)
         tmpElm.select()
         document.execCommand('copy')
-        console.log("tmpElm.textContent="+ tmpElm.textContent)
-        console.log("tmpElm.innerText="+ tmpElm.innerText)
-        console.log("tmpElm.innerHTML="+ tmpElm.innerHTML)
+        console.log("tmpElm.textContent=" + tmpElm.textContent)
+        console.log("tmpElm.innerText=" + tmpElm.innerText)
+        console.log("tmpElm.innerHTML=" + tmpElm.innerHTML)
         elm.removeChild(tmpElm)
     }
 </script>
