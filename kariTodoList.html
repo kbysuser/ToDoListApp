@@ -45,14 +45,17 @@
         // リストの子要素の先頭に追加???
         let listItem = tskList.insertBefore(itm, tskList.children[0])
         listItem.setAttribute("class", "list_item")
-        tsk = tsk.replace(/\n?\r/g, '<br>')
+        // ↓あったほうがいいのか疑問
+        // tsk = tsk.replace(/\n?\r/g, '<br>')
         console.log("tsk=" + tsk)
         // ↓けすかも
-        listItem.innerHTML = /* "&#x1f600;" + */ tsk
+        // listItem.innerHTML = /* "&#x1f600;" + */ tsk
         // tskContentにタスク内容をいれる
         let tskContent = document.createElement("span")
         tskContent.setAttribute("class", "tsk_content")
+        //innerHTML　と　innerHTMLでどうちがうか
         tskContent.innerText = tsk
+        console.log(tskContent.innerText)
         listItem.appendChild(tskContent)
 
         //クリックでコピーする機能
