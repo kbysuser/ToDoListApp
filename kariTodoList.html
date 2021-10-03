@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<boby>   
+<boby>
     <h4>
         TODOリスト
     </h4>
@@ -44,10 +44,33 @@
         console.log("itm.tagName=" + itm.tagName)
         // リストの子要素の先頭に追加???
         let listItem = tskList.insertBefore(itm, tskList.children[0])
-        listItem.setAttribute("class","list_item")
+        listItem.setAttribute("class", "list_item")
         tsk = tsk.replace(/\n?\r/g, '<br>')
         console.log("tsk=" + tsk)
-        listItem.innerHTML = "&#x1f600;" + tsk
+        // ↓けすかも
+        listItem.innerHTML = /* "&#x1f600;" + */ tsk
+        // tskContentにタスク内容をいれる
+        let tskContent = document.createElement("span")
+        tskContent.setAttribute("class", "tsk_content")
+        tskContent.innerText = tsk
+        listItem.appendChild(tskContent)
+
+        //クリックでコピーする機能
+        tskContent.addEventListener("click", function (evt) {
+            evt.preventDefault()
+            // the function below is to be defined...
+            elmStrCopy(this)
+        })
+
+
+        // 右クリックで削除する機能
+        tskContent.addEventListener("contextmenu", function (evt) {
+            evt.preventDefault()
+            this.parentNode.parentNode.removeChild(
+                this.parentNode
+            )
+        })
+
         // 削除ボタンの生成
         let delBtn = document.createElement("button")
         delBtn.innerText = "削除"
@@ -55,13 +78,15 @@
         delBtn.setAttribute("class", "delete_button")
         console.log("delBtn.tagName=" + delBtn.className)
         listItem.appendChild(delBtn)
-        listItem.insertAdjacentHTML("beforeend",'<hr>')
-        console.log("delBtn.innerText" + delBtn.innerText)
+        listItem.insertAdjacentHTML("beforeend", '<hr>')
+        console.log("delBtn.innerText=" + delBtn.innerText)
         // 削除ボタンにイベントリスナを追加
         delBtn.addEventListener("click", function (evt) {
             evt.preventDefault()
             delTsk(delBtn)
         })
+        // 
+
     }//end of addTsk
 
     function delTsk(delBtn) {
@@ -91,22 +116,44 @@
             tskVal.value = ""
         }
     }
+    //the function to copy the string in the element with a click  
+    function elmStrCopy(elm){
+        let tmpElm=document.createElement('textarea')
+        tmpElm.setAttribute('type',"hidden")
+        // how is textContent different from innerText ? 
+        tmpElm.textContent=elm.textContent
+        elm.appendChild(tmpElm)
+        tmpElm.select()
+        document.execCommand('copy')
+        console.log("tmpElm.textContent="+ tmpElm.textContent)
+        console.log("tmpElm.innerText="+ tmpElm.innerText)
+        console.log("tmpElm.innerHTML="+ tmpElm.innerHTML)
+        elm.removeChild(tmpElm)
+    }
 </script>
 
 <style>
-    #note{margin:2em; color:darkblue}
-    h3,h4{
-        color:green;
+    #note {
+        margin: 2em;
+        color: darkblue
     }
-    form{
+
+    h3,
+    h4 {
+        color: green;
+    }
+
+    form {
         margin: 10px 50% 5px 1em;
     }
-    .delete_button{
+
+    .delete_button {
         background-color: cyan;
-        padding:1px 3px 1px 3px;
+        padding: 1px 3px 1px 3px;
         border: groove 5px rgb(39, 39, 138);
         border-radius: 10px;
-        margin-left:10px;
+        margin-left: 10px;
     }
 </style>
+
 </html>
