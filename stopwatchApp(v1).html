@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Document</title>
+</head>
+<boby>
+    <div class="wrapper">
+        <header>
+            <h4>
+                タイマー
+            </h4>
+            <form id="from1">
+
+            </form>
+        </header>
+        <main>
+            <div id="tm_frame">
+                <div id="tm_display"></div>
+                <button id="start_button" display="block">
+                    スタート
+                </button>
+                <button id="reset_button" display="block">
+                    リセット
+                </button>
+            </div>
+
+        </main>
+        <footer>
+            <font size="2">
+
+            </font>
+        </footer>
+    </div>
+</boby>
+<script>
+    let str = ""
+    let tmVal = 0
+    let tmSec = 0
+    let isWorking = false
+    let intervalId = 0
+    let interval = 10
+
+    let startButton = document.getElementById("start_button")
+    let tmDisplay = document.getElementById("tm_display")
+    let resetButton = document.getElementById("reset_button")
+    tmDisplay.textContent = tmSec2TmStr(tmVal)
+
+    tmDisplay.setAttribute("style", "color:red;")
+    onload = function () {
+    }
+    document.addEventListener("keydown", function (evt) {
+        evt.preventDefault()
+        if (evt.ctrlKey == false & evt.keyCode == 13) {
+            console.log(" Enter is pushed.")
+            startButton.click()
+        }
+        else if (evt.ctrlKey & evt.keyCode == 13) {
+            console.log("Ctrl and Enter is pushed simultaneously.")
+            resetButton.click()
+        }
+    })
+    startButton.addEventListener("click", function (evt) {
+        evt.preventDefault()
+        if (isWorking == false) {
+            isWorking = true
+            workTimer(this)
+        }
+        else {
+            isWorking = false
+            pauseTimer(this)
+        }
+
+        console.log("startButton is pushed..")
+    })
+    // let interval=10
+    function workTimer(elm) {
+        tmDisplay.setAttribute("style", "color:darkblue;")
+        startButton.textContent = "ストップ"
+        intervalId = setInterval(function () {
+            tmVal++
+            tmSec = Math.round(tmVal * interval / 1000)
+            tmDisplay.innerText = tmSec2TmStr(tmSec)
+        }, interval)
+    }
+    function tmSec2TmStr(tmSec) {
+        tmSecH = ("000" + parseInt(tmSec / 3600)).slice(-2)
+        tmSecM = ("000" + parseInt(tmSec / 60) % 60).slice(-2)
+        tmSecS = ("000" + parseInt(tmSec) % 60).slice(-2)
+        tmStr = tmSecH + "h" + tmSecM + "m" + tmSecS + "s"
+        console.log("tmSec is " + tmSec)
+        return tmStr
+    }
+    function pauseTimer(elm) {
+        tmDisplay.setAttribute("style", "color:red;")
+        startButton.textContent = "スタート"
+        clearInterval(intervalId)
+    }
+    // 
+    resetButton.addEventListener("click", function (evt) {
+        evt.preventDefault()
+        tmVal = 0
+        tmSec = Math.round(tmVal * interval / 1000)
+        tmDisplay.innerText = tmSec2TmStr(tmSec)
+    })
+
+</script>
+<style>
+    #tm_display {
+        font-size: 2rem;
+        color: darkblue;
+    }
+
+    #start_button,
+    #reset_button {
+        color: blue;
+        margin-left: 1rem;
+        border: groove 3px blue;
+        border-radius: 10px;
+    }
+
+    header,
+    main,
+    footer {
+        width: clamp(200px, 50vw, 500px);
+        flex-basis: auto;
+        display: block;
+    }
+
+    header {
+        border: groove 3px cyan;
+        flex: 1;
+    }
+
+    main {
+        border: groove 3px blue;
+        flex: 0 3 auto;
+        /*  */
+        margin: 10px 0;
+    }
+
+    footer {
+        border: groove 3px green;
+        /* フッタを下にしようとするとリスト
+        が増えたときにかぶる */
+        /* position: absolute;
+        bottom: 0; */
+        flex: 1 0 auto;
+        /* display:box-sizing; */
+
+    }
+
+    div.wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        align-content: center;
+        justify-content: space-around;
+        /* width:clamp(200px,50vw,500px); */
+
+
+    }
+</style>
+
+</html>
